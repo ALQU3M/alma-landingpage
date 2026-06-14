@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <!-- ===================== RETELL WIDGET ===================== -->
 <script
@@ -19,22 +19,24 @@
     data-agent-id="agent_432bf9045b4a95c362608881d6"
     data-title="Alma"
     data-fab-text="Parler à Alma"
-    data-color="#D97757"
-    data-theme-color="#FAF9F5"
+    data-color="#F2A736"
+    data-theme-color="#14213D"
     data-popup-message="Une question sur votre établissement ?"
 ></script>
 
 <style>
   :root{
-    --ink: #1F1E1D;
-    --paper: #FAF9F5;
-    --paper-deep: #F0EEE6;
-    --clay: #D97757;
-    --clay-soft: #F4E0D6;
-    --slate: #87867F;
-    --line: #E8E5DC;
-    --radius: 18px;
-    --max: 1140px;
+    --ink: #14213D;
+    --ink-soft: #1f2f54;
+    --paper: #F4F1EB;
+    --paper-deep: #ECE7DD;
+    --beacon: #F2A736;
+    --sage: #6E9B8C;
+    --slate: #4B5566;
+    --line: #DAD4C8;
+    --line-dark: rgba(244,241,235,0.16);
+    --radius: 14px;
+    --max: 1180px;
   }
 
   *{ box-sizing: border-box; }
@@ -44,28 +46,28 @@
     font-family:'Inter', sans-serif;
     color: var(--ink);
     background: var(--paper);
-    line-height: 1.6;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
   h1,h2,h3{
-    font-family:'Source Serif 4', serif;
+    font-family:'Space Grotesk', sans-serif;
     font-weight: 600;
     letter-spacing: -0.01em;
     margin: 0;
   }
   .label{
-    font-family:'Inter', sans-serif;
+    font-family:'IBM Plex Mono', monospace;
     text-transform: uppercase;
-    letter-spacing: 0.09em;
-    font-size: 0.74rem;
-    font-weight: 600;
-    color: var(--clay);
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    font-weight: 500;
   }
   a{ color: inherit; }
   img,svg{ display:block; max-width:100%; }
 
+  /* focus visibility */
   a:focus-visible, button:focus-visible{
-    outline: 2px solid var(--clay);
+    outline: 2px solid var(--beacon);
     outline-offset: 3px;
   }
 
@@ -75,14 +77,18 @@
     padding: 0 32px;
   }
   .section{
-    padding: 88px 0;
+    padding: 96px 0;
   }
   @media (max-width: 860px){
-    .section{ padding: 56px 0; }
+    .section{ padding: 64px 0; }
     .wrap{ padding: 0 20px; }
   }
 
-  /* ---------- NAV ---------- */
+  /* ---------- NAV + HERO ---------- */
+  header.hero{
+    background: var(--ink);
+    color: var(--paper);
+  }
   nav.topnav{
     display:flex;
     align-items:center;
@@ -90,109 +96,115 @@
     padding: 28px 0;
   }
   .wordmark{
-    font-family:'Source Serif 4', serif;
-    font-weight: 600;
-    font-size: 1.5rem;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
     text-decoration: none;
-    color: var(--ink);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .wordmark .dot{
+    width: 10px; height:10px; border-radius:50%;
+    background: var(--beacon);
+    display:inline-block;
   }
   .navlinks{
     display:flex;
-    align-items:center;
-    gap: 36px;
+    gap: 32px;
     list-style:none;
     margin:0; padding:0;
     font-size: 0.92rem;
   }
   .navlinks a{
     text-decoration:none;
-    color: var(--slate);
+    color: rgba(244,241,235,0.78);
     transition: color .15s ease;
   }
-  .navlinks a:hover{ color: var(--ink); }
-  @media (max-width: 700px){ .navlinks li:not(:last-child){ display:none; } }
+  .navlinks a:hover{ color: var(--paper); }
+  @media (max-width: 700px){ .navlinks{ display:none; } }
 
-  /* ---------- HERO ---------- */
   .hero-grid{
     display:grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap: 64px;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
     align-items:center;
-    padding: 48px 0 96px;
+    padding: 56px 0 80px;
   }
   @media (max-width: 900px){
-    .hero-grid{ grid-template-columns: 1fr; padding: 24px 0 56px; }
+    .hero-grid{ grid-template-columns: 1fr; padding: 32px 0 56px; }
   }
 
+  .hero-text .label{ color: var(--beacon); }
   .hero-text h1{
-    font-size: clamp(2.6rem, 5.4vw, 4rem);
-    line-height: 1.18;
-    margin: 18px 0 24px;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    line-height: 1.12;
+    margin: 18px 0 22px;
   }
-  .hero-text h1 em{
-    font-style: italic;
-    color: var(--clay);
-  }
+  .hero-text h1 .accent{ color: var(--beacon); }
   .hero-text p.lead{
-    font-size: 1.1rem;
-    color: var(--slate);
-    max-width: 44ch;
+    font-size: 1.08rem;
+    color: rgba(244,241,235,0.82);
+    max-width: 46ch;
     margin: 0 0 32px;
   }
-  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
   .btn{
     font-family:'Inter', sans-serif;
     font-weight: 600;
     font-size: 0.95rem;
-    padding: 14px 28px;
+    padding: 14px 26px;
     border-radius: 999px;
     border: 1px solid transparent;
     cursor:pointer;
     text-decoration:none;
     display:inline-flex;
     align-items:center;
-    transition: transform .15s ease, opacity .15s ease, border-color .15s ease;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
   }
   .btn-primary{
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--beacon);
+    color: var(--ink);
   }
   .btn-primary:hover{ transform: translateY(-1px); }
   .btn-ghost{
-    border-color: var(--ink);
-    color: var(--ink);
-    background: transparent;
+    border-color: rgba(244,241,235,0.32);
+    color: var(--paper);
   }
-  .btn-ghost:hover{ opacity: 0.7; }
+  .btn-ghost:hover{ border-color: var(--paper); }
 
   /* hero conversation card */
   .demo-card{
-    background: var(--paper-deep);
+    background: var(--paper);
     color: var(--ink);
     border-radius: var(--radius);
-    padding: 24px;
-    border: 1px solid var(--line);
+    padding: 22px;
+    box-shadow: 0 24px 60px -24px rgba(0,0,0,0.45);
   }
   .demo-card .demo-head{
     display:flex;
     align-items:center;
     justify-content: space-between;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
   .demo-card .demo-head .who{
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--slate);
   }
   .bubble{
-    border-radius: 14px;
+    border-radius: 12px;
     padding: 14px 16px;
-    font-size: 0.96rem;
+    font-size: 0.94rem;
     margin-bottom: 12px;
     max-width: 92%;
   }
   .bubble.student{
-    background: var(--paper);
+    background: var(--paper-deep);
     color: var(--ink);
     border: 1px solid var(--line);
   }
@@ -202,24 +214,51 @@
     margin-left: auto;
   }
   .route-tag{
-    font-size: 0.78rem;
-    letter-spacing: 0.02em;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--ink);
-    background: var(--clay-soft);
+    background: rgba(242,167,54,0.22);
+    border: 1px solid var(--beacon);
     border-radius: 999px;
-    padding: 6px 14px;
+    padding: 6px 12px;
     display:inline-flex;
     align-items:center;
     gap: 8px;
     margin-top: 4px;
   }
-  .route-tag::before{ content:"→"; color: var(--clay); font-weight: 700; }
+  .route-tag::before{ content:"→"; }
+
+  /* signage ticker */
+  .signage{
+    border-top: 1px solid var(--line-dark);
+    overflow:hidden;
+    padding: 18px 0;
+  }
+  .signage-track{
+    display:flex;
+    gap: 40px;
+    white-space:nowrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    color: rgba(244,241,235,0.55);
+    animation: scroll-left 36s linear infinite;
+  }
+  .signage-track span{ flex-shrink:0; }
+  @keyframes scroll-left{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .signage-track{ animation: none; }
+  }
 
   /* ---------- CONTEXT / TIMELINE ---------- */
-  .context{ background: var(--paper-deep); }
   .context h2{
-    font-size: clamp(1.9rem, 3.4vw, 2.5rem);
-    max-width: 20ch;
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    max-width: 18ch;
   }
   .context p.intro{
     color: var(--slate);
@@ -228,25 +267,44 @@
     margin: 18px 0 56px;
   }
   .timeline{
+    position: relative;
     display:grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
   }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    top: 9px;
+    left: 0; right:0;
+    height: 1px;
+    background: var(--line);
+  }
   @media (max-width: 800px){
-    .timeline{ grid-template-columns: 1fr; gap: 28px; }
+    .timeline{ grid-template-columns: 1fr; gap: 32px; }
+    .timeline::before{ display:none; }
   }
-  .tl-item{
+  .tl-item{ position:relative; padding-top: 26px; }
+  .tl-item::before{
+    content:"";
+    position:absolute;
+    top:0; left:0;
+    width: 18px; height: 18px;
+    border-radius:50%;
     background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 24px;
+    border: 2px solid var(--beacon);
   }
-  .tl-item .label{ margin-bottom: 10px; display:block; }
-  .tl-item h3{ font-size: 1.15rem; margin-bottom: 8px; }
-  .tl-item p{ color: var(--slate); font-size: 0.94rem; margin:0; }
+  @media (max-width: 800px){
+    .tl-item{ padding-top:0; padding-left: 30px; }
+    .tl-item::before{ left:0; top: 4px; }
+  }
+  .tl-item .label{ color: var(--ink); opacity:0.55; margin-bottom: 8px; }
+  .tl-item h3{ font-size: 1.05rem; margin-bottom: 6px; }
+  .tl-item p{ color: var(--slate); font-size: 0.92rem; margin:0; }
 
   /* ---------- HOW IT WORKS ---------- */
-  .how h2{ font-size: clamp(1.9rem, 3.4vw, 2.5rem); max-width: 22ch; }
+  .how{ background: var(--paper-deep); }
+  .how h2{ font-size: clamp(1.8rem, 3.4vw, 2.4rem); max-width: 22ch; }
   .channels{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -255,44 +313,48 @@
   }
   @media (max-width: 800px){ .channels{ grid-template-columns: 1fr; } }
   .channel-card{
-    background: var(--paper-deep);
+    background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 32px;
+    padding: 28px;
   }
-  .channel-card .label{ display:block; margin-bottom: 6px; }
-  .channel-card h3{ font-size: 1.4rem; margin: 8px 0 12px; }
-  .channel-card p{ color: var(--slate); margin:0; font-size: 0.98rem; }
+  .channel-card .label{ color: var(--sage); }
+  .channel-card h3{ font-size: 1.3rem; margin: 10px 0 10px; }
+  .channel-card p{ color: var(--slate); margin:0; font-size: 0.96rem; }
   .channel-link{
     display:block;
-    margin-top: 20px;
+    margin-top: 18px;
     padding-top: 18px;
     border-top: 1px solid var(--line);
-    font-size: 0.82rem;
-    letter-spacing: 0.04em;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--clay);
-    font-weight: 600;
+    color: var(--ink);
   }
 
-  /* ---------- ROUTING DIAGRAM ---------- */
-  .routing{ background: var(--paper-deep); }
+  /* ---------- ROUTING DIAGRAM (signature) ---------- */
+  .routing{
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .routing .label{ color: var(--beacon); }
   .routing h2{
-    font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
     margin: 14px 0 8px;
     max-width: 24ch;
   }
   .routing p.note{
-    color: var(--slate);
+    color: rgba(244,241,235,0.7);
     max-width: 56ch;
-    font-size: 1rem;
+    font-size: 0.98rem;
     margin: 0 0 48px;
   }
   .diagram{ width:100%; height:auto; }
-  .diagram text{ font-family:'Inter', sans-serif; }
+  .diagram text{ font-family:'IBM Plex Mono', monospace; }
 
   /* ---------- POSITIONING ---------- */
-  .positioning h2{ font-size: clamp(1.9rem, 3.4vw, 2.5rem); max-width: 20ch; }
+  .positioning h2{ font-size: clamp(1.8rem, 3.4vw, 2.4rem); max-width: 20ch; }
   .positioning p.intro{
     color: var(--slate);
     max-width: 60ch;
@@ -302,52 +364,52 @@
   .compare{
     display:grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 32px;
   }
-  @media (max-width: 800px){ .compare{ grid-template-columns: 1fr; gap: 20px; } }
+  @media (max-width: 800px){ .compare{ grid-template-columns: 1fr; gap: 24px; } }
   .compare > div{
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 32px;
+    padding: 28px;
   }
   .compare h3{
-    font-size: 0.8rem;
-    margin-bottom: 20px;
-    font-family:'Inter', sans-serif;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
+    font-size: 1rem;
+    margin-bottom: 18px;
   }
-  .compare .standard h3{ color: var(--slate); }
   .compare ul{
     list-style:none;
     margin:0; padding:0;
     display:flex;
     flex-direction:column;
-    gap: 14px;
-    font-size: 0.96rem;
+    gap: 12px;
+    font-size: 0.94rem;
     color: var(--slate);
   }
-  .compare li{ padding-left: 24px; position:relative; }
+  .compare li{ padding-left: 22px; position:relative; }
   .compare .standard li::before{
     content:"–";
     position:absolute; left:0; color: var(--line);
     font-weight:700;
   }
-  .compare .alma{ border-color: var(--clay); background: var(--clay-soft); }
-  .compare .alma h3{ color: var(--clay); }
+  .compare .alma{ border-color: var(--sage); background: rgba(110,155,142,0.06); }
+  .compare .alma h3{ color: var(--sage); }
   .compare .alma li{ color: var(--ink); }
   .compare .alma li::before{
     content:"→";
-    position:absolute; left:0; color: var(--clay);
+    position:absolute; left:0; color: var(--sage);
     font-weight:700;
   }
 
   /* ---------- PRICING ---------- */
-  .pricing h2{ font-size: clamp(1.9rem, 3.4vw, 2.5rem); }
+  .pricing{ background: var(--paper-deep); }
+  .pricing h2{ font-size: clamp(1.8rem, 3.4vw, 2.4rem); }
   .pricing p.note{
-    color: var(--slate);
-    font-size: 0.92rem;
+    color: var(--ink);
+    opacity:0.75;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform:uppercase;
     margin: 10px 0 48px;
   }
   .plans{
@@ -357,36 +419,37 @@
   }
   @media (max-width: 800px){ .plans{ grid-template-columns: 1fr; } }
   .plan{
-    background: var(--paper-deep);
+    background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 36px;
+    padding: 32px;
     display:flex;
     flex-direction:column;
   }
   .plan.full{
-    border-color: var(--clay);
+    border-color: var(--beacon);
+    box-shadow: 0 24px 50px -28px rgba(20,33,61,0.35);
     position:relative;
   }
   .plan.full::before{
     content:"Le plus complet";
     position:absolute;
-    top: -13px; left: 32px;
-    background: var(--clay);
-    color: var(--paper);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
+    top: -13px; left: 28px;
+    background: var(--beacon);
+    color: var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
     text-transform:uppercase;
-    font-weight:600;
-    padding: 5px 14px;
+    padding: 5px 12px;
     border-radius: 999px;
   }
-  .plan h3{ font-size: 1.2rem; margin-bottom: 6px; }
+  .plan h3{ font-size: 1.1rem; margin-bottom: 6px; }
   .plan .price{
-    font-family:'Source Serif 4', serif;
-    font-size: 2.6rem;
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 2.4rem;
     font-weight: 600;
-    margin: 8px 0 4px;
+    margin: 6px 0 4px;
   }
   .plan .price span{
     font-family:'Inter', sans-serif;
@@ -396,30 +459,31 @@
   }
   .plan ul{
     list-style:none;
-    margin: 28px 0 0;
+    margin: 24px 0 0;
     padding:0;
     display:flex;
     flex-direction:column;
-    gap: 14px;
-    font-size: 0.96rem;
+    gap: 12px;
+    font-size: 0.94rem;
     flex-grow:1;
   }
   .plan li{
-    padding-left: 26px;
+    padding-left: 24px;
     position: relative;
     color: var(--ink);
   }
   .plan li::before{
     content:"✓";
     position:absolute; left:0;
-    color: var(--clay);
+    color: var(--sage);
     font-weight:700;
   }
   .plan li.sub{ color: var(--slate); font-size: 0.88rem; }
 
   /* ---------- FOOTER ---------- */
   footer{
-    border-top: 1px solid var(--line);
+    background: var(--ink);
+    color: var(--paper);
   }
   .footer-grid{
     display:flex;
@@ -427,27 +491,30 @@
     align-items:flex-start;
     flex-wrap:wrap;
     gap: 32px;
-    padding: 56px 0 32px;
+    padding: 64px 0 32px;
   }
   .footer-tagline{
-    font-family:'Source Serif 4', serif;
+    font-family:'Space Grotesk', sans-serif;
     font-size: 1.3rem;
     max-width: 26ch;
   }
-  .footer-tagline em{ font-style: italic; color: var(--clay); }
+  .footer-tagline .accent{ color: var(--beacon); }
   .footer-contact{
-    font-size: 0.9rem;
-    color: var(--slate);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    color: rgba(244,241,235,0.78);
     display:flex;
     flex-direction:column;
     gap: 10px;
   }
   .footer-bottom{
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--line-dark);
     padding: 22px 0;
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    color: var(--slate);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: rgba(244,241,235,0.45);
     display:flex;
     justify-content: space-between;
     flex-wrap:wrap;
@@ -457,21 +524,24 @@
 </head>
 <body>
 
-<header>
+<header class="hero">
   <div class="wrap">
     <nav class="topnav">
-      <a class="wordmark" href="#">Alma</a>
+      <a class="wordmark" href="#">
+        <span class="dot"></span> Alma
+      </a>
       <ul class="navlinks">
         <li><a href="#contexte">Contexte</a></li>
         <li><a href="#produit">Produit</a></li>
-        <li><a href="#tarifs" class="btn btn-primary" style="padding:10px 22px; font-size:0.88rem;">Voir les tarifs</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
+        <li><a href="mailto:contact@alma-ai.eu">Contact</a></li>
       </ul>
     </nav>
 
     <div class="hero-grid">
       <div class="hero-text">
         <p class="label">Réceptionniste IA · Enseignement supérieur</p>
-        <h1>Alma répond à vos étudiants.<br><em>Vos équipes décident.</em></h1>
+        <h1>Alma répond à vos étudiants.<br><span class="accent">Vos équipes décident.</span></h1>
         <p class="lead">
           Un accueil conversationnel, par écrit ou à voix haute, disponible dans plus de
           15 langues, pour les universités et écoles européennes. Alma oriente chaque
@@ -480,7 +550,6 @@
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#tarifs">Voir les tarifs</a>
-          <a class="btn btn-ghost" href="#produit">Comment ça marche</a>
         </div>
       </div>
 
@@ -503,6 +572,15 @@
       </div>
     </div>
   </div>
+
+  <div class="signage">
+    <div class="signage-track" aria-hidden="true">
+      <span>FR</span><span>EN</span><span>ES</span><span>DE</span><span>IT</span>
+      <span>PT</span><span>NL</span><span>PL</span><span>EL</span><span>RO</span>
+      <span>FR</span><span>EN</span><span>ES</span><span>DE</span><span>IT</span>
+      <span>PT</span><span>NL</span><span>PL</span><span>EL</span><span>RO</span>
+    </div>
+  </div>
 </header>
 
 <!-- ===================== CONTEXTE ===================== -->
@@ -516,22 +594,22 @@
     </p>
     <div class="timeline">
       <div class="tl-item">
-        <span class="label">Septembre</span>
+        <p class="label">Septembre</p>
         <h3>Rentrée</h3>
         <p>Inscriptions, accès aux plateformes, premières démarches administratives.</p>
       </div>
       <div class="tl-item">
-        <span class="label">Fév. – Avr.</span>
+        <p class="label">Fév. – Avr.</p>
         <h3>Mobilité &amp; échanges</h3>
         <p>Candidatures Erasmus, conventions, questions logement à l'étranger.</p>
       </div>
       <div class="tl-item">
-        <span class="label">Déc. &amp; Mai-Juin</span>
+        <p class="label">Déc. &amp; Mai-Juin</p>
         <h3>Sessions d'examens</h3>
         <p>Modalités, rattrapages, relevés de notes : questions urgentes et répétitives.</p>
       </div>
       <div class="tl-item">
-        <span class="label">Toute l'année</span>
+        <p class="label">Toute l'année</p>
         <h3>Étudiants internationaux</h3>
         <p>Visas, titres de séjour, premiers pas sur le campus, fuseaux horaires décalés.</p>
       </div>
@@ -542,12 +620,12 @@
 <!-- ===================== PRODUIT ===================== -->
 <section class="section how" id="produit">
   <div class="wrap">
-    <p class="label">Comment ça marche</p>
-    <h2 style="margin-top:14px;">Une seule mémoire, deux canaux</h2>
+    <p class="label" style="color:var(--sage)">Comment ça marche</p>
+    <h2>Une seule mémoire, deux canaux</h2>
 
     <div class="channels">
       <div class="channel-card">
-        <span class="label">Canal écrit</span>
+        <p class="label">Canal écrit</p>
         <h3>Chat</h3>
         <p>
           Intégré à votre site, disponible 24/7. Répond aux questions courantes,
@@ -557,7 +635,7 @@
         <span class="channel-link">Web · SAV · multilingue</span>
       </div>
       <div class="channel-card">
-        <span class="label">Canal vocal</span>
+        <p class="label">Canal vocal</p>
         <h3>Voix</h3>
         <p>
           Pour les échanges qui méritent une conversation en direct. Le contexte
@@ -574,7 +652,7 @@
 <section class="section routing">
   <div class="wrap">
     <p class="label">Le principe</p>
-    <h2 style="margin-top:14px;">Alma oriente, l'humain décide</h2>
+    <h2>Alma oriente, l'humain décide</h2>
     <p class="note">
       Alma répond aux questions courantes et identifie quel service doit
       prendre le relais. Elle ne valide, ne soumet ni ne modifie aucune
@@ -583,44 +661,44 @@
 
     <svg class="diagram" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma : un message étudiant arrive vers Alma, qui l'oriente vers le service compétent">
       <!-- message box -->
-      <rect x="20" y="120" width="190" height="64" rx="10" fill="var(--paper)" stroke="#DCD7CB"/>
-      <text x="115" y="146" fill="var(--ink)" font-size="11" letter-spacing="2" text-anchor="middle">MESSAGE</text>
-      <text x="115" y="166" fill="var(--slate)" font-size="11" letter-spacing="2" text-anchor="middle">ÉTUDIANT</text>
+      <rect x="20" y="120" width="190" height="64" rx="10" fill="var(--ink-soft)" stroke="rgba(244,241,235,0.25)"/>
+      <text x="115" y="146" fill="#F4F1EB" font-size="11" letter-spacing="2" text-anchor="middle" text-transform="uppercase">MESSAGE</text>
+      <text x="115" y="166" fill="rgba(244,241,235,0.7)" font-size="11" letter-spacing="2" text-anchor="middle">ÉTUDIANT</text>
 
       <!-- arrow to Alma -->
-      <line x1="210" y1="152" x2="320" y2="152" stroke="#CFC9BB" stroke-width="1.5"/>
-      <polygon points="320,148 330,152 320,156" fill="#CFC9BB"/>
+      <line x1="210" y1="152" x2="320" y2="152" stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
+      <polygon points="320,148 330,152 320,156" fill="rgba(244,241,235,0.35)"/>
 
       <!-- Alma node -->
-      <circle cx="385" cy="152" r="52" fill="var(--clay)"/>
-      <text x="385" y="158" fill="var(--paper)" font-size="15" font-weight="600" letter-spacing="2" text-anchor="middle">ALMA</text>
+      <circle cx="385" cy="152" r="52" fill="#F2A736"/>
+      <text x="385" y="158" fill="#14213D" font-size="15" font-weight="600" letter-spacing="2" text-anchor="middle">ALMA</text>
 
       <!-- fan-out lines to 4 destinations -->
-      <line x1="437" y1="130" x2="600" y2="44"  stroke="#CFC9BB" stroke-width="1.5"/>
-      <line x1="437" y1="145" x2="600" y2="112" stroke="#CFC9BB" stroke-width="1.5"/>
-      <line x1="437" y1="160" x2="600" y2="190" stroke="#CFC9BB" stroke-width="1.5"/>
-      <line x1="437" y1="175" x2="600" y2="258" stroke="#CFC9BB" stroke-width="1.5"/>
+      <line x1="437" y1="130" x2="600" y2="44"  stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
+      <line x1="437" y1="145" x2="600" y2="112" stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
+      <line x1="437" y1="160" x2="600" y2="190" stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
+      <line x1="437" y1="175" x2="600" y2="258" stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
 
       <!-- destination boxes -->
       <g>
-        <rect x="600" y="20"  width="280" height="50" rx="8" fill="var(--paper)" stroke="#DCD7CB"/>
-        <circle cx="622" cy="45" r="4" fill="var(--clay)"/>
-        <text x="640" y="49" fill="var(--ink)" font-size="11" letter-spacing="2">ADMISSIONS</text>
+        <rect x="600" y="20"  width="280" height="50" rx="8" fill="none" stroke="rgba(244,241,235,0.3)"/>
+        <circle cx="622" cy="45" r="4" fill="#6E9B8C"/>
+        <text x="640" y="49" fill="#F4F1EB" font-size="11" letter-spacing="2">ADMISSIONS</text>
       </g>
       <g>
-        <rect x="600" y="88"  width="280" height="50" rx="8" fill="var(--paper)" stroke="#DCD7CB"/>
-        <circle cx="622" cy="113" r="4" fill="var(--clay)"/>
-        <text x="640" y="117" fill="var(--ink)" font-size="11" letter-spacing="2">SCOLARITÉ &amp; INSCRIPTIONS</text>
+        <rect x="600" y="88"  width="280" height="50" rx="8" fill="none" stroke="rgba(244,241,235,0.3)"/>
+        <circle cx="622" cy="113" r="4" fill="#6E9B8C"/>
+        <text x="640" y="117" fill="#F4F1EB" font-size="11" letter-spacing="2">SCOLARITÉ &amp; INSCRIPTIONS</text>
       </g>
       <g>
-        <rect x="600" y="166" width="280" height="50" rx="8" fill="var(--paper)" stroke="#DCD7CB"/>
-        <circle cx="622" cy="191" r="4" fill="var(--clay)"/>
-        <text x="640" y="195" fill="var(--ink)" font-size="11" letter-spacing="2">LOGEMENT &amp; VIE ÉTUDIANTE</text>
+        <rect x="600" y="166" width="280" height="50" rx="8" fill="none" stroke="rgba(244,241,235,0.3)"/>
+        <circle cx="622" cy="191" r="4" fill="#6E9B8C"/>
+        <text x="640" y="195" fill="#F4F1EB" font-size="11" letter-spacing="2">LOGEMENT &amp; VIE ÉTUDIANTE</text>
       </g>
       <g>
-        <rect x="600" y="234" width="280" height="50" rx="8" fill="var(--paper)" stroke="#DCD7CB"/>
-        <circle cx="622" cy="259" r="4" fill="var(--clay)"/>
-        <text x="640" y="263" fill="var(--ink)" font-size="11" letter-spacing="2">RELATIONS INTERNATIONALES</text>
+        <rect x="600" y="234" width="280" height="50" rx="8" fill="none" stroke="rgba(244,241,235,0.3)"/>
+        <circle cx="622" cy="259" r="4" fill="#6E9B8C"/>
+        <text x="640" y="263" fill="#F4F1EB" font-size="11" letter-spacing="2">RELATIONS INTERNATIONALES</text>
       </g>
     </svg>
   </div>
@@ -629,8 +707,8 @@
 <!-- ===================== POSITIONNEMENT ===================== -->
 <section class="section positioning">
   <div class="wrap">
-    <p class="label">Positionnement</p>
-    <h2 style="margin-top:14px;">Pensé pour l'Europe, par défaut</h2>
+    <p class="label" style="color:var(--sage)">Positionnement</p>
+    <h2>Pensé pour l'Europe, par défaut</h2>
     <p class="intro">
       La plupart des outils existants ont été conçus pour le marché nord-américain :
       anglais par défaut, conformité RGPD ajoutée après coup. Alma part de l'inverse.
@@ -638,7 +716,7 @@
 
     <div class="compare">
       <div class="standard">
-        <h3>Approche courante</h3>
+        <h3 class="label" style="color:var(--slate)">Approche courante</h3>
         <ul>
           <li>Interface principalement en anglais</li>
           <li>Mémoire limitée à un seul canal</li>
@@ -647,7 +725,7 @@
         </ul>
       </div>
       <div class="alma">
-        <h3>Avec Alma</h3>
+        <h3 class="label">Avec Alma</h3>
         <ul>
           <li>Multilingue dès la conception, plus de 15 langues</li>
           <li>Mémoire partagée entre chat et voix</li>
@@ -662,8 +740,8 @@
 <!-- ===================== TARIFS ===================== -->
 <section class="section pricing" id="tarifs">
   <div class="wrap">
-    <p class="label">Tarifs</p>
-    <h2 style="margin-top:14px;">Deux formules, un seul principe</h2>
+    <p class="label" style="color:var(--sage)">Tarifs</p>
+    <h2>Deux formules, un seul principe</h2>
     <p class="note">Facturation mensuelle · sans engagement à l'essai</p>
 
     <div class="plans">
@@ -697,7 +775,7 @@
     <div class="footer-grid">
       <div class="footer-tagline">
         Alma, AI Receptionist.<br>
-        <em>Alma oriente, l'humain décide.</em>
+        <span class="accent">Alma oriente, l'humain décide.</span>
       </div>
       <div class="footer-contact">
         <span>contact@alma-ai.eu</span>
