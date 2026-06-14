@@ -10,6 +10,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
+<!-- ===================== RETELL WIDGET ===================== -->
+<script>
+  // Chaque visite démarre avec une conversation vierge :
+  // on supprime les conversations Retell éventuellement
+  // sauvegardées dans ce navigateur, avant que le widget se charge.
+  Object.keys(localStorage)
+    .filter((k) => k.toLowerCase().includes('retell'))
+    .forEach((k) => localStorage.removeItem(k));
+</script>
+<script
+    id="retell-widget"
+    src="https://dashboard.retellai.com/retell-widget-v2.js"
+    type="module"
+    data-public-key="public_key_8a48de5b19bafcae69af4"
+    data-agent-id="agent_432bf9045b4a95c362608881d6"
+    data-title="Alma"
+    data-fab-text="Parler à Alma"
+    data-color="#F2A736"
+    data-theme-color="#14213D"
+    data-popup-message="Une question sur votre établissement ?"
+></script>
+
 <style>
   :root{
     --ink: #14213D;
@@ -774,28 +796,6 @@
     </div>
   </div>
 </footer>
-
-<!-- ===================== RETELL WIDGET ===================== -->
-<script>
-  // Chaque visite démarre avec une conversation vierge :
-  // on supprime les conversations Retell éventuellement
-  // sauvegardées dans ce navigateur, avant que le widget se charge.
-  Object.keys(localStorage)
-    .filter((k) => k.toLowerCase().includes('retell'))
-    .forEach((k) => localStorage.removeItem(k));
-</script>
-<script
-    id="retell-widget"
-    src="https://dashboard.retellai.com/retell-widget-v2.js"
-    type="module"
-    data-public-key="public_key_8a48de5b19bafcae69af4"
-    data-agent-id="agent_432bf9045b4a95c362608881d6"
-    data-title="Alma"
-    data-fab-text="Parler à Alma"
-    data-color="#F2A736"
-    data-theme-color="#14213D"
-    data-popup-message="Une question sur votre établissement ?"
-></script>
 
 </body>
 </html>
