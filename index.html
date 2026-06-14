@@ -535,8 +535,7 @@
           à la place de l'étudiant.
         </p>
         <div class="cta-row">
-          <button class="btn btn-primary" id="cta-essai">Essayer Alma</button>
-          <a class="btn btn-ghost" href="#tarifs">Voir les tarifs</a>
+          <a class="btn btn-primary" href="#tarifs">Voir les tarifs</a>
         </div>
       </div>
 
@@ -544,17 +543,17 @@
         <div class="demo-card">
           <div class="demo-head">
             <span class="who">Conversation</span>
-            <span class="who">Chat · ES → FR</span>
+            <span class="who">Chat · ES</span>
           </div>
           <div class="bubble student">
             Hola, ¿cómo solicito la beca Erasmus para el próximo semestre?
           </div>
           <div class="bubble alma">
-            La demande de bourse Erasmus se dépose sur le portail Mobilité,
-            avant le 15 mars. Je transmets votre question au bureau des
-            relations internationales pour un suivi personnalisé.
+            La solicitud de la beca Erasmus se hace en el portal de Movilidad,
+            antes del 15 de marzo. Transmito tu pregunta a la oficina de
+            relaciones internacionales para un seguimiento personalizado.
           </div>
-          <span class="route-tag">Relations internationales</span>
+          <span class="route-tag">Relaciones internacionales</span>
         </div>
       </div>
     </div>
@@ -777,6 +776,14 @@
 </footer>
 
 <!-- ===================== RETELL WIDGET ===================== -->
+<script>
+  // Chaque visite démarre avec une conversation vierge :
+  // on supprime les conversations Retell éventuellement
+  // sauvegardées dans ce navigateur, avant que le widget se charge.
+  Object.keys(localStorage)
+    .filter((k) => k.toLowerCase().includes('retell'))
+    .forEach((k) => localStorage.removeItem(k));
+</script>
 <script
     id="retell-widget"
     src="https://dashboard.retellai.com/retell-widget-v2.js"
@@ -789,23 +796,6 @@
     data-theme-color="#14213D"
     data-popup-message="Une question sur votre établissement ?"
 ></script>
-
-<script>
-  // Bouton "Essayer Alma" du hero : tente d'ouvrir le widget Retell.
-  // Hack basé sur le shadow DOM (mode "open") — si Retell change son markup
-  // ou utilise un shadow root "closed", ceci ne fera simplement rien
-  // (pas d'erreur grâce aux optional chaining).
-  document.getElementById('cta-essai')?.addEventListener('click', () => {
-    const host = document.getElementById('retell-widget-container')
-              || document.querySelector('[id^="retell-widget"]');
-    const root = host?.shadowRoot;
-    if (!root) return;
-
-    // À ajuster après inspection : on cherche le bouton flottant (FAB)
-    const fab = root.querySelector('button');
-    fab?.click();
-  });
-</script>
 
 </body>
 </html>
