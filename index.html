@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alma — Réceptionniste IA pour l'enseignement supérieur</title>
+<meta name="description" content="Alma répond aux questions de vos étudiants par chat et par voix, en plus de 15 langues, et oriente chaque demande vers la bonne personne. Conçue pour les établissements européens." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink: #14213D;
+    --ink-soft: #1f2f54;
+    --paper: #F4F1EB;
+    --paper-deep: #ECE7DD;
+    --beacon: #F2A736;
+    --sage: #6E9B8C;
+    --slate: #4B5566;
+    --line: #DAD4C8;
+    --line-dark: rgba(244,241,235,0.16);
+    --radius: 14px;
+    --max: 1180px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    font-family:'Inter', sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .label{
+    font-family:'IBM Plex Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+  a{ color: inherit; }
+  img,svg{ display:block; max-width:100%; }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--beacon);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .section{
+    padding: 96px 0;
+  }
+  @media (max-width: 860px){
+    .section{ padding: 64px 0; }
+    .wrap{ padding: 0 20px; }
+  }
+
+  /* ---------- NAV + HERO ---------- */
+  header.hero{
+    background: var(--ink);
+    color: var(--paper);
+  }
+  nav.topnav{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 28px 0;
+  }
+  .wordmark{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .wordmark .dot{
+    width: 10px; height:10px; border-radius:50%;
+    background: var(--beacon);
+    display:inline-block;
+  }
+  .navlinks{
+    display:flex;
+    gap: 32px;
+    list-style:none;
+    margin:0; padding:0;
+    font-size: 0.92rem;
+  }
+  .navlinks a{
+    text-decoration:none;
+    color: rgba(244,241,235,0.78);
+    transition: color .15s ease;
+  }
+  .navlinks a:hover{ color: var(--paper); }
+  @media (max-width: 700px){ .navlinks{ display:none; } }
+
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items:center;
+    padding: 56px 0 80px;
+  }
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns: 1fr; padding: 32px 0 56px; }
+  }
+
+  .hero-text .label{ color: var(--beacon); }
+  .hero-text h1{
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    line-height: 1.12;
+    margin: 18px 0 22px;
+  }
+  .hero-text h1 .accent{ color: var(--beacon); }
+  .hero-text p.lead{
+    font-size: 1.08rem;
+    color: rgba(244,241,235,0.82);
+    max-width: 46ch;
+    margin: 0 0 32px;
+  }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-family:'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 14px 26px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-primary{
+    background: var(--beacon);
+    color: var(--ink);
+  }
+  .btn-primary:hover{ transform: translateY(-1px); }
+  .btn-ghost{
+    border-color: rgba(244,241,235,0.32);
+    color: var(--paper);
+  }
+  .btn-ghost:hover{ border-color: var(--paper); }
+
+  /* hero conversation card */
+  .demo-card{
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: 0 24px 60px -24px rgba(0,0,0,0.45);
+  }
+  .demo-card .demo-head{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .demo-card .demo-head .who{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate);
+  }
+  .bubble{
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 0.94rem;
+    margin-bottom: 12px;
+    max-width: 92%;
+  }
+  .bubble.student{
+    background: var(--paper-deep);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .bubble.alma{
+    background: var(--ink);
+    color: var(--paper);
+    margin-left: auto;
+  }
+  .route-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: rgba(242,167,54,0.22);
+    border: 1px solid var(--beacon);
+    border-radius: 999px;
+    padding: 6px 12px;
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .route-tag::before{ content:"→"; }
+
+  /* signage ticker */
+  .signage{
+    border-top: 1px solid var(--line-dark);
+    overflow:hidden;
+    padding: 18px 0;
+  }
+  .signage-track{
+    display:flex;
+    gap: 40px;
+    white-space:nowrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    color: rgba(244,241,235,0.55);
+    animation: scroll-left 36s linear infinite;
+  }
+  .signage-track span{ flex-shrink:0; }
+  @keyframes scroll-left{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .signage-track{ animation: none; }
+  }
+
+  /* ---------- CONTEXT / TIMELINE ---------- */
+  .context h2{
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    max-width: 18ch;
+  }
+  .context p.intro{
+    color: var(--slate);
+    max-width: 56ch;
+    font-size: 1.04rem;
+    margin: 18px 0 56px;
+  }
+  .timeline{
+    position: relative;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    top: 9px;
+    left: 0; right:0;
+    height: 1px;
+    background: var(--line);
+  }
+  @media (max-width: 800px){
+    .timeline{ grid-template-columns: 1fr; gap: 32px; }
+    .timeline::before{ display:none; }
+  }
+  .tl-item{ position:relative; padding-top: 26px; }
+  .tl-item::before{
+    content:"";
+    position:absolute;
+    top:0; left:0;
+    width: 18px; height: 18px;
+    border-radius:50%;
+    background: var(--paper);
+    border: 2px solid var(--beacon);
+  }
+  @media (max-width: 800px){
+    .tl-item{ padding-top:0; padding-left: 30px; }
+    .tl-item::before{ left:0; top: 4px; }
+  }
+  .tl-item .label{ color: var(--ink); opacity:0.55; margin-bottom: 8px; }
+  .tl-item h3{ font-size: 1.05rem; margin-bottom: 6px; }
+  .tl-item p{ color: var(--slate); font-size: 0.92rem; margin:0; }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .how{ background: var(--paper-deep); }
+  .how h2{ font-size: clamp(1.8rem, 3.4vw, 2.4rem); max-width: 22ch; }
+  .channels{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  @media (max-width: 800px){ .channels{ grid-template-columns: 1fr; } }
+  .channel-card{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .channel-card .label{ color: var(--sage); }
+  .channel-card h3{ font-size: 1.3rem; margin: 10px 0 10px; }
+  .channel-card p{ color: var(--slate); margin:0; font-size: 0.96rem; }
+  .channel-link{
+    display:block;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  /* ---------- ROUTING DIAGRAM (signature) ---------- */
+  .routing{
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .routing .label{ color: var(--beacon); }
+  .routing h2{
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    margin: 14px 0 8px;
+    max-width: 24ch;
+  }
+  .routing p.note{
+    color: rgba(244,241,235,0.7);
+    max-width: 56ch;
+    font-size: 0.98rem;
+    margin: 0 0 48px;
+  }
+  .diagram{ width:100%; height:auto; }
+  .diagram text{ font-family:'IBM Plex Mono', monospace; }
+
+  /* ---------- POSITIONING ---------- */
+  .positioning h2{ font-size: clamp(1.8rem, 3.4vw, 2.4rem); max-width: 20ch; }
+  .positioning p.intro{
+    color: var(--slate);
+    max-width: 60ch;
+    font-size: 1.04rem;
+    margin: 18px 0 48px;
+  }
+  .compare{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  @media (max-width: 800px){ .compare{ grid-template-columns: 1fr; gap: 24px; } }
+  .compare > div{
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .compare h3{
+    font-size: 1rem;
+    margin-bottom: 18px;
+  }
+  .compare ul{
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
+    font-size: 0.94rem;
+    color: var(--slate);
+  }
+  .compare li{ padding-left: 22px; position:relative; }
+  .compare .standard li::before{
+    content:"–";
+    position:absolute; left:0; color: var(--line);
+    font-weight:700;
+  }
+  .compare .alma{ border-color: var(--sage); background: rgba(110,155,142,0.06); }
+  .compare .alma h3{ color: var(--sage); }
+  .compare .alma li{ color: var(--ink); }
+  .compare .alma li::before{
+    content:"→";
+    position:absolute; left:0; color: var(--sage);
+    font-weight:700;
+  }
+
+  /* ---------- PRICING ---------- */
+  .pricing{ background: var(--paper-deep); }
+  .pricing h2{ font-size: clamp(1.8rem, 3.4vw, 2.4rem); }
+  .pricing p.note{
+    color: var(--ink);
+    opacity:0.75;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform:uppercase;
+    margin: 10px 0 48px;
+  }
+  .plans{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 800px){ .plans{ grid-template-columns: 1fr; } }
+  .plan{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px;
+    display:flex;
+    flex-direction:column;
+  }
+  .plan.full{
+    border-color: var(--beacon);
+    box-shadow: 0 24px 50px -28px rgba(20,33,61,0.35);
+    position:relative;
+  }
+  .plan.full::before{
+    content:"Le plus complet";
+    position:absolute;
+    top: -13px; left: 28px;
+    background: var(--beacon);
+    color: var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform:uppercase;
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  .plan h3{ font-size: 1.1rem; margin-bottom: 6px; }
+  .plan .price{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    margin: 6px 0 4px;
+  }
+  .plan .price span{
+    font-family:'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight:400;
+    color: var(--slate);
+  }
+  .plan ul{
+    list-style:none;
+    margin: 24px 0 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
+    font-size: 0.94rem;
+    flex-grow:1;
+  }
+  .plan li{
+    padding-left: 24px;
+    position: relative;
+    color: var(--ink);
+  }
+  .plan li::before{
+    content:"✓";
+    position:absolute; left:0;
+    color: var(--sage);
+    font-weight:700;
+  }
+  .plan li.sub{ color: var(--slate); font-size: 0.88rem; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .footer-grid{
+    display:flex;
+    justify-content: space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap: 32px;
+    padding: 64px 0 32px;
+  }
+  .footer-tagline{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 1.3rem;
+    max-width: 26ch;
+  }
+  .footer-tagline .accent{ color: var(--beacon); }
+  .footer-contact{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    color: rgba(244,241,235,0.78);
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+  .footer-bottom{
+    border-top: 1px solid var(--line-dark);
+    padding: 22px 0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: rgba(244,241,235,0.45);
+    display:flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+    gap: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="topnav">
+      <a class="wordmark" href="#">
+        <span class="dot"></span> Alma
+      </a>
+      <ul class="navlinks">
+        <li><a href="#contexte">Contexte</a></li>
+        <li><a href="#produit">Produit</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
+        <li><a href="mailto:contact@alma-ai.eu">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-grid">
+      <div class="hero-text">
+        <p class="label">Réceptionniste IA · Enseignement supérieur</p>
+        <h1>Alma répond à vos étudiants.<br><span class="accent">Vos équipes décident.</span></h1>
+        <p class="lead">
+          Un accueil conversationnel — par écrit ou à voix haute — disponible dans plus de
+          15 langues, pour les universités et écoles européennes. Alma oriente chaque
+          question vers la bonne personne ; elle ne remplit jamais une démarche
+          à la place de l'étudiant.
+        </p>
+        <div class="cta-row">
+          <button class="btn btn-primary" id="cta-essai">Essayer Alma</button>
+          <a class="btn btn-ghost" href="#tarifs">Voir les tarifs</a>
+        </div>
+      </div>
+
+      <div class="hero-demo">
+        <div class="demo-card">
+          <div class="demo-head">
+            <span class="who">Conversation</span>
+            <span class="who">Chat · ES → FR</span>
+          </div>
+          <div class="bubble student">
+            Hola, ¿cómo solicito la beca Erasmus para el próximo semestre?
+          </div>
+          <div class="bubble alma">
+            La demande de bourse Erasmus se dépose sur le portail Mobilité,
+            avant le 15 mars. Je transmets votre question au bureau des
+            relations internationales pour un suivi personnalisé.
+          </div>
+          <span class="route-tag">Relations internationales</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="signage">
+    <div class="signage-track" aria-hidden="true">
+      <span>FR</span><span>EN</span><span>ES</span><span>DE</span><span>IT</span>
+      <span>PT</span><span>NL</span><span>PL</span><span>EL</span><span>RO</span>
+      <span>FR</span><span>EN</span><span>ES</span><span>DE</span><span>IT</span>
+      <span>PT</span><span>NL</span><span>PL</span><span>EL</span><span>RO</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== CONTEXTE ===================== -->
+<section class="section context" id="contexte">
+  <div class="wrap">
+    <h2>Les pics ne préviennent pas</h2>
+    <p class="intro">
+      Rentrée de septembre, sessions de mobilité entre février et avril, périodes
+      d'examens, arrivées d'étudiants internationaux : les questions affluent par
+      vagues, souvent en dehors des horaires d'ouverture des services administratifs.
+    </p>
+    <div class="timeline">
+      <div class="tl-item">
+        <p class="label">Septembre</p>
+        <h3>Rentrée</h3>
+        <p>Inscriptions, accès aux plateformes, premières démarches administratives.</p>
+      </div>
+      <div class="tl-item">
+        <p class="label">Fév. – Avr.</p>
+        <h3>Mobilité &amp; échanges</h3>
+        <p>Candidatures Erasmus, conventions, questions logement à l'étranger.</p>
+      </div>
+      <div class="tl-item">
+        <p class="label">Déc. &amp; Mai-Juin</p>
+        <h3>Sessions d'examens</h3>
+        <p>Modalités, rattrapages, relevés de notes — questions urgentes et répétitives.</p>
+      </div>
+      <div class="tl-item">
+        <p class="label">Toute l'année</p>
+        <h3>Étudiants internationaux</h3>
+        <p>Visas, titres de séjour, premiers pas sur le campus, fuseaux horaires décalés.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRODUIT ===================== -->
+<section class="section how" id="produit">
+  <div class="wrap">
+    <p class="label" style="color:var(--sage)">Comment ça marche</p>
+    <h2>Une seule mémoire, deux canaux</h2>
+
+    <div class="channels">
+      <div class="channel-card">
+        <p class="label">Canal écrit</p>
+        <h3>Chat</h3>
+        <p>
+          Intégré à votre site, disponible 24/7. Répond aux questions courantes,
+          comprend plus de 15 langues, et s'appuie sur la documentation de
+          votre établissement.
+        </p>
+        <span class="channel-link">Web · SAV · multilingue</span>
+      </div>
+      <div class="channel-card">
+        <p class="label">Canal vocal</p>
+        <h3>Voix</h3>
+        <p>
+          Pour les échanges qui méritent une conversation en direct. Même
+          contexte, même historique que le chat — l'étudiant n'a jamais à
+          se répéter d'un canal à l'autre.
+        </p>
+        <span class="channel-link">Téléphone · temps réel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ROUTING DIAGRAM ===================== -->
+<section class="section routing">
+  <div class="wrap">
+    <p class="label">Le principe</p>
+    <h2>Alma oriente, l'humain décide</h2>
+    <p class="note">
+      Alma répond aux questions courantes et identifie quel service doit
+      prendre le relais. Elle ne valide, ne soumet ni ne modifie aucune
+      démarche administrative à la place de l'étudiant ou de votre équipe.
+    </p>
+
+    <svg class="diagram" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma : un message étudiant arrive vers Alma, qui l'oriente vers le service compétent">
+      <!-- message box -->
+      <rect x="20" y="120" width="190" height="64" rx="10" fill="var(--ink-soft)" stroke="rgba(244,241,235,0.25)"/>
+      <text x="115" y="146" fill="#F4F1EB" font-size="11" letter-spacing="2" text-anchor="middle" text-transform="uppercase">MESSAGE</text>
+      <text x="115" y="166" fill="rgba(244,241,235,0.7)" font-size="11" letter-spacing="2" text-anchor="middle">ÉTUDIANT</text>
+
+      <!-- arrow to Alma -->
+      <line x1="210" y1="152" x2="320" y2="152" stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
+      <polygon points="320,148 330,152 320,156" fill="rgba(244,241,235,0.35)"/>
+
+      <!-- Alma node -->
+      <circle cx="385" cy="152" r="52" fill="#F2A736"/>
+      <text x="385" y="158" fill="#14213D" font-size="15" font-weight="600" letter-spacing="2" text-anchor="middle">ALMA</text>
+
+      <!-- fan-out lines to 4 destinations -->
+      <line x1="437" y1="130" x2="600" y2="44"  stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
+      <line x1="437" y1="145" x2="600" y2="112" stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
+      <line x1="437" y1="160" x2="600" y2="190" stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
+      <line x1="437" y1="175" x2="600" y2="258" stroke="rgba(244,241,235,0.35)" stroke-width="1.5"/>
+
+      <!-- destination boxes -->
+      <g>
+        <rect x="600" y="20"  width="280" height="50" rx="8" fill="none" stroke="rgba(244,241,235,0.3)"/>
+        <circle cx="622" cy="45" r="4" fill="#6E9B8C"/>
+        <text x="640" y="49" fill="#F4F1EB" font-size="11" letter-spacing="2">ADMISSIONS</text>
+      </g>
+      <g>
+        <rect x="600" y="88"  width="280" height="50" rx="8" fill="none" stroke="rgba(244,241,235,0.3)"/>
+        <circle cx="622" cy="113" r="4" fill="#6E9B8C"/>
+        <text x="640" y="117" fill="#F4F1EB" font-size="11" letter-spacing="2">SCOLARITÉ &amp; INSCRIPTIONS</text>
+      </g>
+      <g>
+        <rect x="600" y="166" width="280" height="50" rx="8" fill="none" stroke="rgba(244,241,235,0.3)"/>
+        <circle cx="622" cy="191" r="4" fill="#6E9B8C"/>
+        <text x="640" y="195" fill="#F4F1EB" font-size="11" letter-spacing="2">LOGEMENT &amp; VIE ÉTUDIANTE</text>
+      </g>
+      <g>
+        <rect x="600" y="234" width="280" height="50" rx="8" fill="none" stroke="rgba(244,241,235,0.3)"/>
+        <circle cx="622" cy="259" r="4" fill="#6E9B8C"/>
+        <text x="640" y="263" fill="#F4F1EB" font-size="11" letter-spacing="2">RELATIONS INTERNATIONALES</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- ===================== POSITIONNEMENT ===================== -->
+<section class="section positioning">
+  <div class="wrap">
+    <p class="label" style="color:var(--sage)">Positionnement</p>
+    <h2>Pensé pour l'Europe, par défaut</h2>
+    <p class="intro">
+      La plupart des outils existants ont été conçus pour le marché nord-américain :
+      anglais par défaut, conformité RGPD ajoutée après coup. Alma part de l'inverse.
+    </p>
+
+    <div class="compare">
+      <div class="standard">
+        <h3 class="label" style="color:var(--slate)">Approche courante</h3>
+        <ul>
+          <li>Interface principalement en anglais</li>
+          <li>Mémoire limitée à un seul canal</li>
+          <li>Conformité RGPD traitée comme une option</li>
+          <li>Paramétrage pensé pour les campus nord-américains</li>
+        </ul>
+      </div>
+      <div class="alma">
+        <h3 class="label">Avec Alma</h3>
+        <ul>
+          <li>Multilingue dès la conception, plus de 15 langues</li>
+          <li>Mémoire partagée entre chat et voix</li>
+          <li>Données hébergées en Europe</li>
+          <li>Pensée pour les calendriers et procédures européens</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TARIFS ===================== -->
+<section class="section pricing" id="tarifs">
+  <div class="wrap">
+    <p class="label" style="color:var(--sage)">Tarifs</p>
+    <h2>Deux formules, un seul principe</h2>
+    <p class="note">Facturation mensuelle · sans engagement à l'essai</p>
+
+    <div class="plans">
+      <div class="plan">
+        <h3>Essentiel</h3>
+        <div class="price">399 € <span>/ mois</span></div>
+        <ul>
+          <li>Agent conversationnel par chat</li>
+          <li>Plus de 15 langues</li>
+          <li>Intégration à votre support existant (SAV)</li>
+          <li class="sub">Idéal pour démarrer sur un seul canal</li>
+        </ul>
+      </div>
+      <div class="plan full">
+        <h3>Full</h3>
+        <div class="price">799 € <span>/ mois</span></div>
+        <ul>
+          <li>Tout Essentiel</li>
+          <li>Assistant vocal par téléphone</li>
+          <li>Mémoire partagée entre chat et voix</li>
+          <li class="sub">Pour un accueil unifié, tous canaux</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-tagline">
+        Alma — AI Receptionist.<br>
+        <span class="accent">Alma oriente, l'humain décide.</span>
+      </div>
+      <div class="footer-contact">
+        <span>contact@alma-ai.eu</span>
+        <span>Démo : essayez Alma en bas à droite</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ALMA</span>
+      <span>RGPD · HÉBERGEMENT EUROPÉEN</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== RETELL WIDGET ===================== -->
+<script
+    id="retell-widget"
+    src="https://dashboard.retellai.com/retell-widget-v2.js"
+    type="module"
+    data-public-key="public_key_8a48de5b19bafcae69af4"
+    data-agent-id="agent_432bf9045b4a95c362608881d6"
+    data-title="Alma"
+    data-fab-text="Parler à Alma"
+    data-color="#F2A736"
+    data-theme-color="#14213D"
+    data-popup-message="Une question sur votre établissement ?"
+></script>
+
+<script>
+  // Bouton "Essayer Alma" du hero : tente d'ouvrir le widget Retell.
+  // Hack basé sur le shadow DOM (mode "open") — si Retell change son markup
+  // ou utilise un shadow root "closed", ceci ne fera simplement rien
+  // (pas d'erreur grâce aux optional chaining).
+  document.getElementById('cta-essai')?.addEventListener('click', () => {
+    const host = document.getElementById('retell-widget-container')
+              || document.querySelector('[id^="retell-widget"]');
+    const root = host?.shadowRoot;
+    if (!root) return;
+
+    // À ajuster après inspection : on cherche le bouton flottant (FAB)
+    const fab = root.querySelector('button');
+    fab?.click();
+  });
+</script>
+
+</body>
+</html>
